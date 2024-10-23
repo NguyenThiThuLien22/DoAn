@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan.Domain.Foods;
-import com.example.doan.PizzaDetailActivity;
+import com.example.doan.DetailActivity;
 import com.example.doan.R;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             @Override
             public void onClick(View v) {
                 // Chuyển sang Activity khác
-                Intent intent = new Intent(v.getContext(), PizzaDetailActivity.class);
+                Intent intent = new Intent(v.getContext(), DetailActivity.class);
 
                 // Truyền dữ liệu qua Intent
                 intent.putExtra("title", foods.getTitle());

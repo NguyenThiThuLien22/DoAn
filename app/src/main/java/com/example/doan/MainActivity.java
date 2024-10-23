@@ -1,18 +1,16 @@
 package com.example.doan;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan.Adapter.CategoryAdapter;
 import com.example.doan.Adapter.FoodAdapter;
 import com.example.doan.Domain.Category;
+import com.example.doan.Domain.CartItem;
 import com.example.doan.Domain.Foods;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +31,19 @@ public class MainActivity extends AppCompatActivity {
     private Spinner locationSp;
     private Spinner timeSp;
     private Spinner printSP;
-    private RecyclerView rcyFood,rcyCategory;
+    private RecyclerView rcyFood, rcyCategory;
     private FoodAdapter foodAdapter;
     private CategoryAdapter categoryAdapter;
+    private ImageView cartBtn,logoutBtn;
 
+    // Tên file SharedPreferences
+    private static final String PREFS_NAME = "CartPrefs";
+    private static final String KEY_CART_ITEMS = "cart_items";
+    public static List<CartItem> cartItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         locationSp = findViewById(R.id.locationSp);
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         foodAdapter = new FoodAdapter();
 
         rcyCategory = findViewById(R.id.recyclerView2);
-        categoryAdapter = new CategoryAdapter();
+        categoryAdapter = new CategoryAdapter(this);
 
         List<Foods> foodList = getListFood();
         List<Category> categoryList = getListCategory();
@@ -67,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         // Set adapter cho RecyclerView
         rcyFood.setAdapter(foodAdapter);
 
-
         // Tạo danh sách dữ liệu cho Spinner
         List<String> list1 = new ArrayList<>();
         list1.add("Quảng Nam");
@@ -85,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Tạo ArrayAdapter để kết nối dữ liệu với Spinner
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list1);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Thay đổi để sử dụng spinner_dropdown_item chuẩn
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list2);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -113,62 +118,86 @@ public class MainActivity extends AppCompatActivity {
         timeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Hiển thị item đã chọn bằng Toast
                 Toast.makeText(MainActivity.this, timeSp.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Không làm gì khi không có item nào được chọn
             }
         });
 
         printSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Hiển thị item đã chọn bằng Toast
                 Toast.makeText(MainActivity.this, printSP.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Không làm gì khi không có item nào được chọn
             }
         });
 
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        cartBtn = findViewById(R.id.cartBtn);
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tạo Intent để chuyển sang CartActivity
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
         });
+
+        logoutBtn=findViewById(R.id.logoutBtn);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tạo Intent để chuyển sang CartActivity
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // Hàm để tải giỏ hàng từ SharedPreferences
+    private void loadCartItems() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(KEY_CART_ITEMS, null);
+        Type type = new TypeToken<ArrayList<CartItem>>() {}.getType();
+        cartItems = gson.fromJson(json, type);
+
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Tải lại dữ liệu giỏ hàng khi MainActivity được hiển thị trở lại
+        loadCartItems();
     }
 
     private List<Foods> getListFood(){
         List<Foods> list = new ArrayList<>();
         list.add(new Foods(10,R.drawable.bach,4.9,10,"Bacon and Cheese Heaven"));
-        list.add(new Foods(10,R.drawable.margherita,4.9,10,"Margherita"));
-        list.add(new Foods(10,R.drawable.bach,4.9,10,"Bacon and Cheese Heaven"));
-        list.add(new Foods(10,R.drawable.bach,4.9,10,"Bacon and Cheese Heaven"));
-
+        list.add(new Foods(10.99,R.drawable.margherita,4.9,11,"Margherita"));
+        list.add(new Foods(10,R.drawable.koreanbbqshortribs,4.9,10,"Korean BBQ Short Ribs"));
+        list.add(new Foods(10,R.drawable.chicagostylehotdog,4.9,10,"Chicago Style Hot Dog"));
 
         return list;
     }
 
     private List<Category> getListCategory(){
         List<Category> list = new ArrayList<>();
-        list.add(new Category(R.drawable.btn_1,"Burger"));
+        list.add(new Category(R.drawable.btn_1,"Pizza"));
         list.add(new Category(R.drawable.btn_2,"Burger"));
-        list.add(new Category(R.drawable.btn_3,"Burger"));
-        list.add(new Category(R.drawable.btn_4,"Burger"));
-        list.add(new Category(R.drawable.btn_5,"Burger"));
-        list.add(new Category(R.drawable.btn_6,"Burger"));
-        list.add(new Category(R.drawable.btn_7,"Burger"));
-        list.add(new Category(R.drawable.btn_8,"Burger"));
-
-
-
+        list.add(new Category(R.drawable.btn_3,"Chicken"));
+        list.add(new Category(R.drawable.btn_4,"Shushi"));
+        list.add(new Category(R.drawable.btn_5,"Meat"));
+        list.add(new Category(R.drawable.btn_6,"HotDog"));
+        list.add(new Category(R.drawable.btn_7,"Drink"));
+        list.add(new Category(R.drawable.btn_8,"More"));
 
         return list;
     }

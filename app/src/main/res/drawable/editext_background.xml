@@ -7,7 +7,8 @@
                 android:width="2dp"
                 android:color="@color/red" />
 
-            <solid android:color="@android:color/transparent" />
+            <!-- Thay đổi màu nền của hình tròn -->
+            <solid android:color="@color/red" />
         </shape>
     </item>
 </selector>
