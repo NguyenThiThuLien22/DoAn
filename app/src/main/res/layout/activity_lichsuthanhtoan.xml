@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container_history_payment"
+        android:layout_width="match_parent"
+        android:layout_height="736dp"
+        android:background="@drawable/image_placeholder"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/text_payment_title"
+            android:layout_width="245dp"
+            android:layout_height="52dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="36dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Thanh toán"
+            android:textColor="#FF000000"
+            android:textSize="36dp" />
+
+        <TextView
+            android:id="@+id/text_recent_transactions"
+            android:layout_width="389dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="154dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Các giao dịch gần đây"
+            android:textColor="#FF000000"
+            android:textSize="36dp" />
+
+        <ImageView
+            android:id="@+id/image_placeholder"
+            android:layout_width="417dp"
+            android:layout_height="129dp"
+            android:layout_marginTop="258dp"
+            android:layout_gravity="top|left"
+            android:background="@drawable/image_rectangle2"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/text_payment"
+            android:layout_width="133dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginTop="270dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Thanh toán"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_amount"
+            android:layout_width="131dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="275dp"
+            android:layout_marginTop="271dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="$142.99"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_review"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="134dp"
+            android:layout_marginTop="342dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Đánh giá"
+            android:textColor="#FF849DF5"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_arrow"
+            android:layout_width="38dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="227dp"
+            android:layout_marginTop="334.5dp"
+            android:layout_marginBottom="-0.5dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="-&gt;"
+            android:textColor="#FF000000"
+            android:textSize="32dp" />
+
+        <TextView
+            android:id="@+id/text_view_details"
+            android:layout_width="152dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="265dp"
+            android:layout_marginTop="338.5dp"
+            android:layout_marginBottom="-2.5dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Xem chi tiết"
+            android:textColor="#FF849DF5"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:id="@+id/image_placeholder1"
+            android:layout_width="417dp"
+            android:layout_height="129dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="419dp"
+            android:layout_gravity="top|left"
+            android:background="@drawable/image_placeholder1"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/text_payment1"
+            android:layout_width="133dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="431dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Thanh toán"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_amount1"
+            android:layout_width="131dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="277dp"
+            android:layout_marginTop="432dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="$10.99"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_review1"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="136dp"
+            android:layout_marginTop="503dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Đánh giá"
+            android:textColor="#FF849DF5"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_arrow1"
+            android:layout_width="38dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="229dp"
+            android:layout_marginTop="495.5dp"
+            android:layout_marginBottom="-0.5dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="-&gt;"
+            android:textColor="#FF000000"
+            android:textSize="32dp" />
+
+        <TextView
+            android:id="@+id/text_view_details1"
+            android:layout_width="152dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="267dp"
+            android:layout_marginTop="499.5dp"
+            android:layout_marginBottom="-2.5dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Xem chi tiết"
+            android:textColor="#FF849DF5"
+            android:textSize="24dp" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
