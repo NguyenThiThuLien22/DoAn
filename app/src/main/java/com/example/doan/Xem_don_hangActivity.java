@@ -3,6 +3,7 @@ package com.example.doan;
 import static com.example.doan.R.id.xemDonHangView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -56,11 +57,16 @@ public class Xem_don_hangActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", (dialog, which) -> {
             // Handle Yes action
             dialog.dismiss();
+            // Navigate to the ReviewActivity
+            Intent intent = new Intent(Xem_don_hangActivity.this, DanhGia.class);
+            startActivity(intent);
             // Code here for what happens after clicking "Yes", such as updating status
         });
         builder.setNegativeButton("No", (dialog, which) -> {
             // Handle No action
             dialog.dismiss();
+            Intent intent = new Intent(Xem_don_hangActivity.this, Xem_don_hangActivity.class);
+            startActivity(intent);
         });
 
         AlertDialog dialog = builder.create();
