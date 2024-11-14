@@ -13,8 +13,26 @@
         android:theme="@style/Theme.DoAn"
         tools:targetApi="31">
         <activity
+            android:name=".Xem_don_hangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TichDiem"
+            android:exported="false" />
+        <activity
+            android:name=".Dathangthanhcong"
+            android:exported="false" />
+        <activity
+            android:name=".Dathangthanhcong"
+            android:exported="false" />
+        <activity
+            android:name=".DanhGia"
+            android:exported="false" />
+        <activity
+            android:name=".LichSuThanhToan"
+            android:exported="false" />
+        <activity
             android:name=".IntroActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,9 +65,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".CartActivity"
             android:exported="false" />

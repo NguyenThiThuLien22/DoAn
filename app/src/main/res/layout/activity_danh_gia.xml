@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:gravity="right">
+
+        <!-- Contact Support -->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/question" />
+        <TextView
+            android:id="@+id/contactSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Support"
+            android:textColor="@color/red"
+            android:padding="8dp"
+            android:drawablePadding="4dp"/>
+
+
+    </LinearLayout>
+
+    <!-- Rating Stars with Emoji -->
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="@drawable/perfect"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Perfect"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <RatingBar
+        android:id="@+id/overallRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:rating="5"
+        android:isIndicator="true"
+        android:progressTint="#FFD700" />
+
+    <!-- Section Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How great was it?"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        />
+
+    <!-- Taste Rating -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Taste"
+
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_weight="1"/>
+
+        <RatingBar
+            android:id="@+id/tasteRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <!-- Portion Rating -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Portion"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_weight="1"/>
+
+        <RatingBar
+            android:id="@+id/portionRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <!-- Packaging Rating -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Packaging"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:layout_weight="1"/>
+
+        <RatingBar
+            android:id="@+id/packagingRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <!-- Review Text -->
+
+    <!-- Submit Button -->
+    <EditText
+        android:id="@+id/reviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="top"
+        android:hint="Tell people about your food"
+        android:maxLines="4"
+        android:minHeight="100dp"
+        android:layout_marginTop="15dp"
+        android:padding="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="15dp"
+            android:text="Review will appear publicly." />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="1dp"
+
+            app:srcCompat="@drawable/symbol" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:backgroundTint="@color/red"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

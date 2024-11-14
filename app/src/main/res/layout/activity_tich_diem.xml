@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_history_points"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/image1">
+
+    <TextView
+        android:id="@+id/text_history_points_title"
+        android:layout_width="308dp"
+        android:layout_height="57dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="36dp"
+        android:layout_gravity="top|left"
+        android:gravity="center_horizontal|center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Lịch sử tích điểm"
+        android:textColor="#FF000000"
+        android:textSize="32dp" />
+
+    <FrameLayout
+        android:id="@+id/container_group"
+        android:layout_width="417dp"
+        android:layout_height="129dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="183dp"
+        android:layout_gravity="top|left"
+        android:background="@drawable/container_group">
+
+        <ImageView
+            android:id="@+id/image_rectangle"
+            android:layout_width="407dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_rectangle2"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/image_rectangle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_rectangle"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/text_order"
+            android:layout_width="133dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Đơn hàng "
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="275dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="13dp"
+            android:layout_gravity="top"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="$142.99"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_points"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginLeft="286dp"
+            android:layout_marginRight="37dp"
+            android:layout_marginTop="50.5dp"
+            android:layout_marginBottom="-0.5dp"
+            android:layout_gravity="top"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="+50 điểm"
+            android:textColor="#FFFE5154"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_view_details"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="265dp"
+            android:layout_marginTop="80.5dp"
+            android:layout_marginBottom="18.5dp"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Xem chi tiết"
+            android:textColor="#FF849DF5"
+            android:textSize="24dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_group1"
+        android:layout_width="417dp"
+        android:layout_height="129dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="368dp"
+        android:layout_gravity="top|left"
+        android:background="@drawable/container_group1">
+
+        <ImageView
+            android:id="@+id/image_rectangle2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_rectangle2"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/text_order1"
+            android:layout_width="133dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_gravity="top|left"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Đơn hàng "
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_price1"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="275dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="13dp"
+            android:layout_gravity="top"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="$10.99"
+            android:textColor="#FF000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_points1"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginLeft="286dp"
+            android:layout_marginRight="37dp"
+            android:layout_marginTop="50.5dp"
+            android:layout_marginBottom="-0.5dp"
+            android:layout_gravity="top"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="+20 điểm"
+            android:textColor="#FFFE5154"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_view_details1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="265dp"
+            android:layout_marginTop="80.5dp"
+            android:layout_marginBottom="18.5dp"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Xem chi tiết"
+            android:textColor="#FF849DF5"
+            android:textSize="24dp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_total_points"
+        android:layout_width="251dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="173dp"
+        android:layout_marginTop="540.5dp"
+        android:layout_marginBottom="-0.5dp"
+        android:layout_gravity="top|left"
+        android:gravity="left|center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Tổng điểm: 77 điểm"
+        android:textColor="#FF000000"
+        android:textSize="24dp" />
+
+    <ImageView
+        android:id="@+id/image_logout"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="383dp"
+        android:layout_gravity="top|left"
+        android:scaleType="centerInside"
+        android:src="@drawable/logout" />
+</FrameLayout>
