@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="736dp"
         android:background="@drawable/drawable_shape"
@@ -44,25 +42,27 @@
             android:gravity="center_horizontal|top"
             android:includeFontPadding="false"
             android:lineHeight="24.2dp"
-            android:text="Đơn hàng của bạn đã được đặt."
+            android:text="Đơn hàng của bạn đã được đặt. Bạn được tích 20diem. "
+
             android:textColor="#FF000000"
             android:textSize="20dp" />
 
         <FrameLayout
-            android:layout_width="149dp"
+            android:layout_width="190dp"
             android:layout_height="37dp"
-            android:layout_marginLeft="36dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="516dp"
             android:layout_gravity="top|left"
             android:background="@drawable/image_rectangle1">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/container_group"
                 android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/tichdiem"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
@@ -74,7 +74,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="Về trang chủ"
+                android:text="Lịch sử tích điểm "
                 android:textColor="#FF000000"
                 android:textSize="20dp" />
         </FrameLayout>
@@ -94,6 +94,7 @@
                 android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/danh_gia_button"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginLeft="34dp"

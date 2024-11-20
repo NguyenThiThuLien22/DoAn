@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.AppCompatButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,19 +42,17 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
         cartView = findViewById(R.id.cartView);
         cartView.setLayoutManager(new LinearLayoutManager(this));
         cartAdapter = new CartAdapter(cartItems, new CartAdapter.CartUpdateListener() {
             @Override
             public void onCartUpdated() {
-                saveCartItems(); // Lưu giỏ hàng khi có thay đổi
+                saveCartItems();
             }
         });
         cartView.setAdapter(cartAdapter);
 
         loadCartItems();
-
 
         if (cartItems.isEmpty()) {
             findViewById(R.id.emptyTxt).setVisibility(View.VISIBLE);
@@ -74,10 +73,23 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        // Lấy tham chiếu đến nút "Place Order"
+        AppCompatButton placeOrderButton = findViewById(R.id.button2);
+
+        // Thiết lập sự kiện OnClick cho nút "Place Order"
+        placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển sang Dathangthangcong
+                Intent intent = new Intent(CartActivity.this, Dathangthanhcong.class);
+                startActivity(intent);
+            }
+        });
 
         updateTotalValues();
-
     }
+
+
 
     private void updateTotalValues() {
         totalFeeTxt = findViewById(R.id.totalFeeTxt);
