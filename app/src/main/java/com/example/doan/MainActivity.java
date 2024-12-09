@@ -1,14 +1,22 @@
 package com.example.doan;
 
+import static com.example.doan.R.*;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.doan.R;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -41,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_CART_ITEMS = "cart_items";
     public static List<CartItem> cartItems = new ArrayList<>();
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     // Hàm để tải giỏ hàng từ SharedPreferences
@@ -200,5 +210,6 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Category(R.drawable.btn_8,"More"));
 
         return list;
+
     }
 }

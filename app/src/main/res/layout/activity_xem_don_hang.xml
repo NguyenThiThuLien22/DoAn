@@ -41,4 +41,5 @@
         android:text="Đã nhận hàng"
         android:layout_gravity="center"
         android:layout_marginTop="16dp" />
+
 </LinearLayout>

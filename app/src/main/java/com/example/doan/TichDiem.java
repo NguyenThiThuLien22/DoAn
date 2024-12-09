@@ -11,31 +11,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TichDiem extends AppCompatActivity {
 
-    private ImageView imageLogout;
-    private TextView pointsTextView;  // TextView to display points
+    private ImageView imageLogout;  // Nút logout
+    private TextView pointsTextView;  // Hiển thị số điểm
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tich_diem);
 
-        // Reference to imageLogout
-        imageLogout = findViewById(R.id.image_logout);
-
-        // Reference to pointsTextView (Assuming there's a TextView in activity_tich_diem layout to display points)
+        // Tham chiếu đến các view trong layout
         pointsTextView = findViewById(R.id.points_text_view);
 
-        // Get the purchase amount passed from DanhGia activity
+        // Nhận dữ liệu từ Intent
         double purchaseAmount = getIntent().getDoubleExtra("purchase_amount", 0.0);
 
-        // Calculate points based on the purchase amount
+        // Tính điểm dựa trên số tiền mua hàng
         int points = calculatePoints(purchaseAmount);
 
-        // Display the calculated points
-        pointsTextView.setText("Your Points: " + points);
-        Toast.makeText(this, "You have earned " + points + " points", Toast.LENGTH_SHORT).show();
+        // Hiển thị số điểm
+        pointsTextView.setText("Số điểm bạn nhận được: " + points);
 
-        // Logout button event
+        // Thông báo thành công
+        Toast.makeText(this, "Bạn đã nhận được " + points + " điểm!", Toast.LENGTH_SHORT).show();
+
+        // Xử lý sự kiện nút logout
         imageLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +43,7 @@ public class TichDiem extends AppCompatActivity {
         });
     }
 
-    // Calculate points based on purchase amount
+    // Hàm tính điểm dựa trên số tiền mua hàng
     private int calculatePoints(double amount) {
         if (amount > 0 && amount <= 10) {
             return 10;
@@ -52,12 +51,14 @@ public class TichDiem extends AppCompatActivity {
             return 20;
         } else if (amount > 20 && amount <= 30) {
             return 30;
+        } else if (amount > 30) {
+            return 50;
         } else {
-            return 50;  // Example for purchases above 30$
+            return 0;  // Nếu số tiền không hợp lệ
         }
     }
 
-    // Navigate back to the home page (MainActivity)
+    // Chuyển hướng về trang chính (MainActivity)
     private void goToHomePage() {
         Intent intent = new Intent(TichDiem.this, MainActivity.class);
         startActivity(intent);

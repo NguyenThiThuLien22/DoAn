@@ -94,19 +94,15 @@ public class CartActivity extends AppCompatActivity {
     private void updateTotalValues() {
         totalFeeTxt = findViewById(R.id.totalFeeTxt);
         double totalFee = calculateTotalFee();
-        totalFeeTxt.setText(String.format("%.2f$", totalFee));
-
-        taxTxt = findViewById(R.id.taxTxt);
-        double tax = calculateTax(totalFee);
-        taxTxt.setText(String.format("%.2f$", tax));
+        totalFeeTxt.setText(String.format("%.3f VND", totalFee));
 
         deliveryTxt = findViewById(R.id.deliveryTxt);
         double deliveryFee = 10;
-        deliveryTxt.setText(String.format("%.2f$", deliveryFee));
+        deliveryTxt.setText(String.format("%.3f VND", deliveryFee));
 
         totalTxt = findViewById(R.id.totalTxt);
-        double total = totalFee + tax + deliveryFee; // Tổng tiền = totalFee + tax + deliveryFee
-        totalTxt.setText(String.format("%.2f$", total));
+        double total = totalFee + deliveryFee; // Tổng tiền = totalFee + tax + deliveryFee
+        totalTxt.setText(String.format("%.3f VND", total));
     }
 
 

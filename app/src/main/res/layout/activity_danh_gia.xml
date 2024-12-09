@@ -24,7 +24,7 @@
             android:id="@+id/contactSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact Support"
+            android:text="Liên hệ hỗ trợ"
             android:textColor="@color/red"
             android:padding="8dp"
             android:drawablePadding="4dp"/>
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Perfect"
+        android:text="Tuyệt vời"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -63,7 +63,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How great was it?"
+        android:text="Nó tuyệt vời thế nào?"
         android:textSize="20sp"
         android:textColor="#000000"
         android:paddingTop="16dp"
@@ -82,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Taste"
+            android:text="Hương vị"
 
             android:layout_gravity="center"
             android:textSize="18sp"
@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Portion"
+            android:text="Khẩu phần"
             android:layout_gravity="center"
             android:textSize="18sp"
             android:textColor="#000000"
@@ -135,7 +135,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Packaging"
+            android:text="Đóng gói"
             android:textSize="18sp"
             android:layout_gravity="center"
             android:textColor="#000000"
@@ -158,7 +158,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/border"
         android:gravity="top"
-        android:hint="Tell people about your food"
+        android:hint="Nói với mọi người về món ăn của bạn"
         android:maxLines="4"
         android:minHeight="100dp"
         android:layout_marginTop="15dp"
@@ -175,7 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginTop="15dp"
-            android:text="Review will appear publicly." />
+            android:text="Đánh giá sẽ xuất hiện công khai." />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -188,9 +188,10 @@
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="Đánh giá"
         android:backgroundTint="@color/red"
         android:textColor="#FFFFFF"
         android:padding="12dp"
