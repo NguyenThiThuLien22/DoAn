@@ -1,15 +1,24 @@
 package com.example.doan;
 
+import static com.example.doan.R.*;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.doan.R;
 
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,18 +34,18 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Spinner locationSp;
     private Spinner timeSp;
-    private Spinner printSP;
+    private Spinner printSp;
     private RecyclerView rcyFood, rcyCategory;
     private FoodAdapter foodAdapter;
     private CategoryAdapter categoryAdapter;
-    private ImageView cartBtn,logoutBtn;
+    private ImageView cartBtn, logoutBtn;
 
-    // Tên file SharedPreferences
     private static final String PREFS_NAME = "CartPrefs";
     private static final String KEY_CART_ITEMS = "cart_items";
     public static List<CartItem> cartItems = new ArrayList<>();
@@ -46,119 +55,131 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Ánh xạ view
+        initViews();
+
+        // Cấu hình RecyclerView
+        setupRecyclerView();
+
+        // Cấu hình Spinner
+        setupSpinners();
+
+        // Xử lý sự kiện nút bấm
+        setupButtonListeners();
+
+        // Cấu hình BottomNavigationView
+        setupBottomNavigation();
+    }
+
+    private void initViews() {
         locationSp = findViewById(R.id.locationSp);
         timeSp = findViewById(R.id.timeSp);
-        printSP = findViewById(R.id.printSP);
-
+        printSp = findViewById(R.id.printSP);
         rcyFood = findViewById(R.id.bestFoodView);
-        foodAdapter = new FoodAdapter();
-
         rcyCategory = findViewById(R.id.recyclerView2);
+        cartBtn = findViewById(R.id.cartBtn);
+        logoutBtn = findViewById(R.id.logoutBtn);
+    }
+
+    private void setupRecyclerView() {
+        foodAdapter = new FoodAdapter();
         categoryAdapter = new CategoryAdapter(this);
 
         List<Foods> foodList = getListFood();
         List<Category> categoryList = getListCategory();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        rcyFood.setLayoutManager(linearLayoutManager);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
-        rcyCategory.setLayoutManager(gridLayoutManager);
-
-        rcyCategory.setAdapter(categoryAdapter);
-        categoryAdapter.setData(categoryList);
+        rcyFood.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        rcyCategory.setLayoutManager(new GridLayoutManager(this, 4));
 
         foodAdapter.setData(foodList);
+        categoryAdapter.setData(categoryList);
 
-        // Set adapter cho RecyclerView
         rcyFood.setAdapter(foodAdapter);
+        rcyCategory.setAdapter(categoryAdapter);
+    }
 
-        // Tạo danh sách dữ liệu cho Spinner
-        List<String> list1 = new ArrayList<>();
-        list1.add("Quảng Nam");
-        list1.add("Đà Nẵng");
+    private void setupSpinners() {
+        List<String> locations = Arrays.asList("Quảng Nam", "Đà Nẵng");
+        List<String> times = Arrays.asList("0-10 phút", "10-30 phút", "Hơn 30 phút");
+        List<String> prices = Arrays.asList("1$-10$", "10$-100$", "Hơn 100$");
 
-        List<String> list2 = new ArrayList<>();
-        list2.add("0-10 phút");
-        list2.add("10-30 phút");
-        list2.add("hơn 30 phút");
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locations);
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, times);
+        ArrayAdapter<String> priceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, prices);
 
-        List<String> list3 = new ArrayList<>();
-        list3.add("1$-10$");
-        list3.add("10$-100$");
-        list3.add("hơn 100$");
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        priceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Tạo ArrayAdapter để kết nối dữ liệu với Spinner
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list1);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSp.setAdapter(locationAdapter);
+        timeSp.setAdapter(timeAdapter);
+        printSp.setAdapter(priceAdapter);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list2);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSp.setOnItemSelectedListener(createSpinnerListener());
+        timeSp.setOnItemSelectedListener(createSpinnerListener());
+        printSp.setOnItemSelectedListener(createSpinnerListener());
+    }
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list3);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        locationSp.setAdapter(adapter1);
-        timeSp.setAdapter(adapter2);
-        printSP.setAdapter(adapter3);
-
-        locationSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private AdapterView.OnItemSelectedListener createSpinnerListener() {
+        return new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Hiển thị item đã chọn bằng Toast
-                Toast.makeText(MainActivity.this, locationSp.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                String selected = parentView.getSelectedItem().toString();
+                Toast.makeText(MainActivity.this, selected, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Không làm gì khi không có item nào được chọn
+                // Không làm gì
             }
+        };
+    }
+
+    private void setupButtonListeners() {
+        cartBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            startActivity(intent);
         });
 
-        timeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Toast.makeText(MainActivity.this, timeSp.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+        logoutBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
+    }
 
-        printSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Toast.makeText(MainActivity.this, printSP.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
 
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
-        });
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                bottomNavigationView.setOnItemSelectedListener(menuItem -> {
+                    int itemId = menuItem.getItemId(); // Đổi 'item' thành 'menuItem'
 
-        cartBtn = findViewById(R.id.cartBtn);
-        cartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Tạo Intent để chuyển sang CartActivity
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
+                    if (itemId == R.id.nav_home) {
+                        return true;
+                    } else if (itemId == R.id.nav_cart) {
+                        Intent cartIntent = new Intent(MainActivity.this, CartActivity.class);
+                        startActivity(cartIntent);
+                        return true;
+                    } else if (itemId == R.id.nav_activity) {
+                        Intent ordersIntent = new Intent(MainActivity.this, Xem_don_hangActivity.class);
+                        startActivity(ordersIntent);
+                        return true;
+                    } else if (itemId == R.id.nav_account) {
+                        Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
+                        startActivity(accountIntent);
+                        return true;
+                    }
+                    return false; // Đảm bảo luôn có giá trị trả về
+                });
 
-        logoutBtn=findViewById(R.id.logoutBtn);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Tạo Intent để chuyển sang CartActivity
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+
+                return false;
             }
         });
     }
 
-    // Hàm để tải giỏ hàng từ SharedPreferences
     private void loadCartItems() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
@@ -174,31 +195,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Tải lại dữ liệu giỏ hàng khi MainActivity được hiển thị trở lại
         loadCartItems();
     }
 
-    private List<Foods> getListFood(){
-        List<Foods> list = new ArrayList<>();
-        list.add(new Foods(10,R.drawable.bach,4.9,10,"Bacon and Cheese Heaven"));
-        list.add(new Foods(10.99,R.drawable.margherita,4.9,11,"Margherita"));
-        list.add(new Foods(10,R.drawable.koreanbbqshortribs,4.9,10,"Korean BBQ Short Ribs"));
-        list.add(new Foods(10,R.drawable.chicagostylehotdog,4.9,10,"Chicago Style Hot Dog"));
-
-        return list;
+    private List<Foods> getListFood() {
+        return Arrays.asList(
+                new Foods(10, R.drawable.bach, 4.9, 10, "Bacon and Cheese Heaven"),
+                new Foods(10.99, R.drawable.margherita, 4.9, 11, "Margherita"),
+                new Foods(10, R.drawable.koreanbbqshortribs, 4.9, 10, "Korean BBQ Short Ribs"),
+                new Foods(10, R.drawable.chicagostylehotdog, 4.9, 10, "Chicago Style Hot Dog")
+        );
     }
 
-    private List<Category> getListCategory(){
-        List<Category> list = new ArrayList<>();
-        list.add(new Category(R.drawable.btn_1,"Pizza"));
-        list.add(new Category(R.drawable.btn_2,"Burger"));
-        list.add(new Category(R.drawable.btn_3,"Chicken"));
-        list.add(new Category(R.drawable.btn_4,"Shushi"));
-        list.add(new Category(R.drawable.btn_5,"Meat"));
-        list.add(new Category(R.drawable.btn_6,"HotDog"));
-        list.add(new Category(R.drawable.btn_7,"Drink"));
-        list.add(new Category(R.drawable.btn_8,"More"));
-
-        return list;
+    private List<Category> getListCategory() {
+        return Arrays.asList(
+                new Category(R.drawable.btn_1, "Pizza"),
+                new Category(R.drawable.btn_2, "Burger"),
+                new Category(R.drawable.btn_3, "Chicken"),
+                new Category(R.drawable.btn_4, "Sushi"),
+                new Category(R.drawable.btn_5, "Meat"),
+                new Category(R.drawable.btn_6, "HotDog"),
+                new Category(R.drawable.btn_7, "Drink"),
+                new Category(R.drawable.btn_8, "More")
+        );
     }
 }

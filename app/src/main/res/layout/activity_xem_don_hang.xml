@@ -34,6 +34,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp" />
+    <include
+        android:id="@+id/view_holder_delivery"
+        layout="@layout/viewholder_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
     <Button
         android:id="@+id/buttonReceivedOrder"
         android:layout_width="wrap_content"
@@ -41,4 +48,5 @@
         android:text="Đã nhận hàng"
         android:layout_gravity="center"
         android:layout_marginTop="16dp" />
+
 </LinearLayout>

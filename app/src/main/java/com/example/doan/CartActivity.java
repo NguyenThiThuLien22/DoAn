@@ -8,16 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatButton;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.doan.Adapter.CartAdapter;
 import com.example.doan.Domain.CartItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +24,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView cartView;
     private CartAdapter cartAdapter;
     private ImageView backBtn;
-    private TextView totalFeeTxt,taxTxt,deliveryTxt,totalTxt;
+    private TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt;
 
     // Tên file SharedPreferences
     private static final String PREFS_NAME = "CartPrefs";
@@ -42,74 +39,78 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        // Khởi tạo các thành phần giao diện
         cartView = findViewById(R.id.cartView);
+        backBtn = findViewById(R.id.backBtn);
+        totalFeeTxt = findViewById(R.id.totalFeeTxt);
+        deliveryTxt = findViewById(R.id.deliveryTxt);
+        totalTxt = findViewById(R.id.totalTxt);
+
+        // Đặt LayoutManager cho RecyclerView
         cartView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Khởi tạo adapter cho RecyclerView
         cartAdapter = new CartAdapter(cartItems, new CartAdapter.CartUpdateListener() {
             @Override
             public void onCartUpdated() {
                 saveCartItems();
+                updateTotalValues(); // Cập nhật giá trị tổng khi giỏ hàng thay đổi
             }
         });
         cartView.setAdapter(cartAdapter);
 
+        // Tải giỏ hàng từ SharedPreferences
         loadCartItems();
 
+        // Kiểm tra và hiển thị thông báo khi giỏ hàng trống
         if (cartItems.isEmpty()) {
             findViewById(R.id.emptyTxt).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.emptyTxt).setVisibility(View.GONE);
         }
 
-        backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveCartItems();
-                Intent intent = new Intent(CartActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(CartActivity.this, "Quay lại MainActivity", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-                finish();
-            }
+        // Xử lý sự kiện nút "Quay lại"
+        backBtn.setOnClickListener(view -> {
+            saveCartItems(); // Lưu lại giỏ hàng khi quay lại
+            Intent intent = new Intent(CartActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Toast.makeText(CartActivity.this, "Quay lại MainActivity", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
         });
 
-        // Lấy tham chiếu đến nút "Place Order"
+        // Xử lý sự kiện nút "Đặt hàng"
         AppCompatButton placeOrderButton = findViewById(R.id.button2);
-
-        // Thiết lập sự kiện OnClick cho nút "Place Order"
-        placeOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Chuyển sang Dathangthangcong
-                Intent intent = new Intent(CartActivity.this, Dathangthanhcong.class);
-                startActivity(intent);
-            }
+        placeOrderButton.setOnClickListener(view -> {
+            // Chuyển sang màn hình đặt hàng thành công
+            Intent intent = new Intent(CartActivity.this, Dathangthanhcong.class);
+            startActivity(intent);
         });
 
+        // Cập nhật lại tổng giá trị khi mở màn hình
         updateTotalValues();
     }
 
-
-
     private void updateTotalValues() {
-        totalFeeTxt = findViewById(R.id.totalFeeTxt);
+        // Cập nhật tổng giá trị của món ăn, phí vận chuyển và tổng tiền
         double totalFee = calculateTotalFee();
-        totalFeeTxt.setText(String.format("%.2f$", totalFee));
+        totalFeeTxt.setText(String.format("%.3f VND", totalFee));
 
-        taxTxt = findViewById(R.id.taxTxt);
-        double tax = calculateTax(totalFee);
-        taxTxt.setText(String.format("%.2f$", tax));
+        double deliveryFee = 10; // Phí vận chuyển cố định
+        deliveryTxt.setText(String.format("%.3f VND", deliveryFee));
 
-        deliveryTxt = findViewById(R.id.deliveryTxt);
-        double deliveryFee = 10;
-        deliveryTxt.setText(String.format("%.2f$", deliveryFee));
-
-        totalTxt = findViewById(R.id.totalTxt);
-        double total = totalFee + tax + deliveryFee; // Tổng tiền = totalFee + tax + deliveryFee
-        totalTxt.setText(String.format("%.2f$", total));
+        double total = totalFee + deliveryFee; // Tổng tiền = tổng giá trị món ăn + phí vận chuyển
+        totalTxt.setText(String.format("%.3f VND", total));
     }
 
-
+    // Hàm để tính tổng giá trị của các món trong giỏ hàng
+    private double calculateTotalFee() {
+        double totalFee = 0.0;
+        for (CartItem item : cartItems) {
+            totalFee += item.getTotalPrice(); // Cộng tổng giá của mỗi món
+        }
+        return totalFee;
+    }
 
     // Hàm để lưu giỏ hàng vào SharedPreferences
     private void saveCartItems() {
@@ -120,8 +121,6 @@ public class CartActivity extends AppCompatActivity {
         editor.putString(KEY_CART_ITEMS, json);
         editor.apply(); // Lưu dữ liệu vào SharedPreferences
     }
-
-
 
     // Hàm để tải giỏ hàng từ SharedPreferences
     private void loadCartItems() {
@@ -135,18 +134,4 @@ public class CartActivity extends AppCompatActivity {
             cartItems = new ArrayList<>();
         }
     }
-
-    private double calculateTotalFee() {
-        double totalFee = 0.0;
-        for (CartItem item : cartItems) {
-            totalFee += item.getTotalPrice(); // Cộng tổng giá của mỗi món
-        }
-        return totalFee;
-    }
-
-    private double calculateTax(double totalFee) {
-        return totalFee * 0.02; // 10% của tổng giá trị
-    }
-
-
 }

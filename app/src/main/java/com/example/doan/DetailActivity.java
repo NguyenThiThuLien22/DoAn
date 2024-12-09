@@ -48,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         titleTextView.setText(title);
 
         priceTxt = findViewById(R.id.priceTxt);
-        priceTxt.setText(String.format("%.2f$", price));
+        priceTxt.setText(String.format("%.3f VND", price));
 
         timeTxt = findViewById(R.id.timeTxt);
         timeTxt.setText(String.valueOf(time));
@@ -103,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
     // Hàm cập nhật tổng giá trị
     private void updateTotalPrice() {
         double totalPrice = quantity * price; // Tính tổng giá trị
-        totalPriceTxt.setText(String.format("%.2f$", totalPrice)); // Hiển thị tổng giá trị
+        totalPriceTxt.setText(String.format("%.3f VND", totalPrice)); // Hiển thị tổng giá trị
     }
 
     private void saveCartItems() {

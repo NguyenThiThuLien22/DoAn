@@ -1,10 +1,13 @@
 package com.example.doan;
 
-import static com.example.doan.CartActivity.cartItems;
+
+import static com.example.doan.MainActivity.cartItems;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +43,40 @@ public class Dathangthanhcong extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageView btnDanhsach = findViewById(R.id.btnDanhsach);
+
+        btnDanhsach.setOnClickListener(view -> {
+            // Tạo PopupMenu
+            PopupMenu popupMenu = new PopupMenu(Dathangthanhcong.this, btnDanhsach);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_banner, popupMenu.getMenu());
+
+            // Xử lý sự kiện click vào các mục menu
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.menu_home) {
+                    // Chuyển sang màn hình Trang chủ
+                    Intent homeIntent = new Intent(Dathangthanhcong.this, MainActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_account) {
+                    // Chuyển sang màn hình Tài khoản
+                    Intent accountIntent = new Intent(Dathangthanhcong.this, AccountActivity.class);
+                    startActivity(accountIntent);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_history) {
+                    // Chuyển sang màn hình Lịch sử đơn hàng
+                    Intent historyIntent = new Intent(Dathangthanhcong.this, LichSuThanhToan.class);
+                    startActivity(historyIntent);
+                    return true;
+                } else {
+                    // Trường hợp không phù hợp
+                    return false;
+                }
+            });
+
+            // Hiển thị menu
+            popupMenu.show();
+        });
+
 
     }
 }
