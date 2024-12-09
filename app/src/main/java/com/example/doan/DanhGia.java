@@ -1,81 +1,85 @@
 package com.example.doan;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DanhGia extends AppCompatActivity {
 
-    private RatingBar tasteRatingBar, portionRatingBar, packagingRatingBar, overallRatingBar;
-    private EditText reviewText;
-    private Button submitButton;
-    private TextView contactSupport;
+    private int rating = 0; // Đánh giá sao
+    private TextView textBinhLuan, textNhapNoiDung;
+    private ImageView[] stars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_gia); // Đảm bảo rằng layout tên là activity_danh_gia
+        setContentView(R.layout.activity_danh_gia); // Chú ý tên layout của bạn
 
-        // Khởi tạo các view
-        overallRatingBar = findViewById(R.id.overallRatingBar);
-        tasteRatingBar = findViewById(R.id.tasteRatingBar);
-        portionRatingBar = findViewById(R.id.portionRatingBar);
-        packagingRatingBar = findViewById(R.id.packagingRatingBar);
-        reviewText = findViewById(R.id.reviewText);
-        submitButton = findViewById(R.id.submitButton);
-        contactSupport = findViewById(R.id.contactSupport);
+        // Lấy tham chiếu đến các thành phần giao diện
+        textBinhLuan = findViewById(R.id.text_binh_luan);
+        textNhapNoiDung = findViewById(R.id.text_nhap_noi_dung);
 
-        // Thiết lập sự kiện cho nút "Contact Support"
-        contactSupport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Xử lý sự kiện khi người dùng nhấn vào "Contact Support"
-                Toast.makeText(DanhGia.this, "Support contact clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Danh sách các ImageView sao
+        stars = new ImageView[]{
+                findViewById(R.id.image_star),
+                findViewById(R.id.image_star1),
+                findViewById(R.id.image_star2),
+                findViewById(R.id.image_star3),
+                findViewById(R.id.image_star4)
+        };
 
-        // Thiết lập sự kiện cho nút "Submit"
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float tasteRating = tasteRatingBar.getRating();
-                float portionRating = portionRatingBar.getRating();
-                float packagingRating = packagingRatingBar.getRating();
-                float overallRating = overallRatingBar.getRating();
-                String reviewContent = reviewText.getText().toString().trim();
-
-                // Check if review content is empty
-                if (reviewContent.isEmpty()) {
-                    Toast.makeText(DanhGia.this, "Vui lòng nhập nội dung đánh giá!", Toast.LENGTH_SHORT).show();
-                    return;
+        // Xử lý sự kiện khi người dùng nhấn vào các sao
+        for (int i = 0; i < stars.length; i++) {
+            final int index = i;
+            stars[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Cập nhật số sao khi người dùng nhấn vào một sao
+                    rating = index + 1;
+                    updateStarRating();
                 }
+            });
+        }
 
-                // Process or send data
-                Toast.makeText(DanhGia.this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
-
-                // Display data temporarily (this could be replaced by an API call to send to server)
-                String result = "Taste: " + tasteRating + "\n" +
-                        "Portion: " + portionRating + "\n" +
-                        "Packaging: " + packagingRating + "\n" +
-                        "Overall: " + overallRating + "\n" +
-                        "Review: " + reviewContent;
-                Toast.makeText(DanhGia.this, result, Toast.LENGTH_LONG).show();
-
-                // Example purchase amount
-                double purchaseAmount = 15.0;  // Replace with the actual purchase amount
-
-                // Navigate to TichDiem activity, passing the purchase amount
-                Intent intent = new Intent(DanhGia.this, TichDiem.class);
-                intent.putExtra("purchase_amount", purchaseAmount);
-                startActivity(intent);
+        // Xử lý nút "Đánh giá"
+        TextView btnDanhGia = findViewById(R.id.text_danh_gia1);
+        btnDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String binhLuan = textNhapNoiDung.getText().toString();
+                if (rating == 0) {
+                    Toast.makeText(DanhGia.this, "Vui lòng chọn sao để đánh giá!", Toast.LENGTH_SHORT).show();
+                } else if (binhLuan.isEmpty()) {
+                    Toast.makeText(DanhGia.this, "Vui lòng nhập bình luận!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Gửi đánh giá và bình luận đi (hoặc lưu vào cơ sở dữ liệu, gửi lên server)
+                    Toast.makeText(DanhGia.this, "Đánh giá: " + rating + " sao\nBình luận: " + binhLuan, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
+        // Xử lý nút "Hủy"
+        TextView btnHuy = findViewById(R.id.text_huy);
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Quay lại hoặc thực hiện hành động hủy
+                finish(); // Đóng Activity và quay lại màn hình trước đó
+            }
+        });
+    }
+
+    // Cập nhật hình ảnh sao khi người dùng chọn sao
+    private void updateStarRating() {
+        for (int i = 0; i < stars.length; i++) {
+            if (i < rating) {
+                stars[i].setImageResource(R.drawable.star); // Sao đã chọn
+            } else {
+                stars[i].setImageResource(R.drawable.star); // Sao chưa chọn
+            }
+        }
     }
 }
